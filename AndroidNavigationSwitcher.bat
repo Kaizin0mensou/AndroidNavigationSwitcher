@@ -1,24 +1,21 @@
 @echo off
-echo Gesture Navigation Enable=1
-echo 2 Button Navigation Enable=2
-echo 3 Button Navigation Enable=3
-set /p navigation=
-if %navigation:1=1%==1 (adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+title AndroidNavigationSwitcher 1.2
+IF "%1" EQU "-1" (
+adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
 adb shell cmd overlay disable com.android.internal.systemui.navbar.twobutton
 adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
-echo Enabled
-echo Press any key
-pause >nul
-) else if %navigation:2=2%==2 (adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+) else if "%1" EQU "-2" (
+adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
 adb shell cmd overlay enable com.android.internal.systemui.navbar.twobutton
-echo Enabled
-echo Press any key
-pause >nul
-) else if %navigation:3=3%==3 (adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
-echo Enabled
-echo Press any key
-pause >nul
-) else (
-echo Error
-goto restart
+) else if "%1" EQU "-3" (
+adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
+) else if "%1" EQU "--help" (
+echo Usage: nav [option...]
+echo -1 : Set gesture navigation
+echo -2 : Set 2 button navigation
+echo -3 : Set 3 button navigation
+echo --help : Show help
+) else if "%1" EQU "" (
+echo Error:no option
 )
+title
